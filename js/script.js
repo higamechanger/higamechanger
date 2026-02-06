@@ -63,9 +63,9 @@ if (heroVideoWrapper) {
     
     // Seamless looping - restart video BEFORE it ends to avoid grey flash
     heroVideoEl.addEventListener('timeupdate', () => {
-      // Restart 0.3 seconds before video ends
-      if (heroVideoEl.duration - heroVideoEl.currentTime < 0.3) {
-        heroVideoEl.currentTime = 0;
+      // Restart 0.5 seconds before video ends, skip to 0.1s to avoid any start frame issues
+      if (heroVideoEl.duration - heroVideoEl.currentTime < 0.5) {
+        heroVideoEl.currentTime = 0.1;
       }
     });
     

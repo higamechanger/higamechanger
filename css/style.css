@@ -260,6 +260,8 @@ body.loaded {
     object-fit: cover;
     opacity: 0.4;
     background: #000000;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .hero-content {
