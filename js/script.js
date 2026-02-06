@@ -61,7 +61,15 @@ if (heroVideoWrapper) {
   if (heroVideoEl) {
     gsap.fromTo(heroVideoEl, { opacity: 0 }, { opacity: 0.4, duration: 1.2, delay: 0.3 });
     
-    // Ensure seamless looping - restart if video ever ends or stalls
+    // Seamless looping - restart video BEFORE it ends to avoid grey flash
+    heroVideoEl.addEventListener('timeupdate', () => {
+      // Restart 0.3 seconds before video ends
+      if (heroVideoEl.duration - heroVideoEl.currentTime < 0.3) {
+        heroVideoEl.currentTime = 0;
+      }
+    });
+    
+    // Fallback: restart if video somehow ends
     heroVideoEl.addEventListener('ended', () => {
       heroVideoEl.currentTime = 0;
       heroVideoEl.play();
