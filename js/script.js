@@ -60,6 +60,19 @@ const isMobileOrReducedMotion = window.matchMedia('(max-width: 768px), (prefers-
 if (heroVideoWrapper) {
   if (heroVideoEl) {
     gsap.fromTo(heroVideoEl, { opacity: 0 }, { opacity: 0.4, duration: 1.2, delay: 0.3 });
+    
+    // Ensure seamless looping - restart if video ever ends or stalls
+    heroVideoEl.addEventListener('ended', () => {
+      heroVideoEl.currentTime = 0;
+      heroVideoEl.play();
+    });
+    
+    // Handle visibility changes (tab switching) to keep video playing
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && heroVideoEl.paused) {
+        heroVideoEl.play();
+      }
+    });
   }
   if (!isMobileOrReducedMotion) {
     gsap.to(heroVideoWrapper, {
