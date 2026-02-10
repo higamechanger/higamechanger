@@ -181,6 +181,7 @@ body.loaded {
 
 .nav-menu {
     display: flex;
+    align-items: center;
     list-style: none;
     gap: 48px;
 }
@@ -932,7 +933,11 @@ body.loaded {
     }
     
     .navbar {
-        padding: 16px 0;
+        padding: 14px 0;
+    }
+    
+    .nav-wrapper {
+        align-items: center;
     }
     
     .logo-img {
@@ -941,18 +946,23 @@ body.loaded {
     
     .logo-italic {
         font-size: 20px;
+        line-height: 1;
     }
     
     .logo-link {
         gap: 8px;
+        align-items: center;
     }
     
     .nav-menu {
         gap: 24px;
+        align-items: center;
     }
     
     .nav-link {
         font-size: 12px;
+        line-height: 1;
+        padding: 4px 0;
     }
     
     .hero {
@@ -1080,24 +1090,32 @@ body.loaded {
         padding: 12px 0;
     }
     
+    .nav-wrapper {
+        align-items: center;
+    }
+    
     .logo-img {
         height: 24px;
     }
     
     .logo-italic {
         font-size: 18px;
+        line-height: 1;
     }
     
     .logo-link {
         gap: 6px;
+        align-items: center;
     }
     
     .nav-menu {
         gap: 16px;
+        align-items: center;
     }
     
     .nav-link {
         font-size: 11px;
+        line-height: 1;
     }
     
     .hero-title-spaced,
