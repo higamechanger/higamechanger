@@ -1080,7 +1080,7 @@ body.loaded {
     }
     .story-left { position: static; }
     .statement-line { font-size: clamp(72px, 22vw, 120px); }
-    .statement-indent { margin-left: clamp(32px, 8vw, 80px); }
+    .statement-indent { margin-left: clamp(56px, 7vw, 120px); }
     .statement-changers { display: none; }
     .statement-changers-desktop { display: block; }
     .story-text { font-size: 18px; line-height: 1.5; margin-bottom: var(--space-md); letter-spacing: var(--inter-headline-spacing); }
@@ -1137,7 +1137,7 @@ body.loaded {
     .hero-btn { padding: 14px 28px; font-size: 14px; }
     
     .statement-line { font-size: clamp(56px, 16vw, 80px); }
-    .statement-indent { margin-left: clamp(24px, 6vw, 56px); }
+    .statement-indent { margin-left: clamp(56px, 7vw, 120px); }
     
     .athletes-grid { grid-template-columns: 1fr; gap: 16px; }
     .athlete-info { padding: 16px; }
