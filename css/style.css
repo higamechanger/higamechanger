@@ -420,6 +420,7 @@ body.loaded {
 
 .hero-line-desktop {
     display: block;
+    word-spacing: 0.18em;
 }
 
 .hero-word {
@@ -428,7 +429,7 @@ body.loaded {
     font-size: clamp(54px, 9vw, 110px);
     font-weight: 500;
     font-style: normal;
-    letter-spacing: var(--inter-display-spacing);
+    letter-spacing: -0.02em;
     line-height: 1.1;
     color: #ffffff;
 }
@@ -438,6 +439,7 @@ body.loaded {
         display: block;
         text-align: center;
         white-space: nowrap;
+        word-spacing: 0.2em;
     }
     .hero-word {
         display: inline;
@@ -585,7 +587,7 @@ body.loaded {
 }
 
 .statement-indent {
-    margin-left: clamp(40px, 5vw, 80px);
+    margin-left: clamp(24px, 3vw, 48px);
 }
 
 /* Desktop: "Game" on one line, "Changers" on next */
@@ -1078,7 +1080,7 @@ body.loaded {
     }
     .story-left { position: static; }
     .statement-line { font-size: clamp(72px, 22vw, 120px); }
-    .statement-indent { margin-left: clamp(16px, 5vw, 40px); }
+    .statement-indent { margin-left: clamp(12px, 3vw, 28px); }
     .statement-changers { display: none; }
     .statement-changers-desktop { display: block; }
     .story-text { font-size: 18px; line-height: 1.5; margin-bottom: var(--space-md); letter-spacing: var(--inter-headline-spacing); }
@@ -1135,7 +1137,7 @@ body.loaded {
     .hero-btn { padding: 14px 28px; font-size: 14px; }
     
     .statement-line { font-size: clamp(56px, 16vw, 80px); }
-    .statement-indent { margin-left: clamp(16px, 4vw, 40px); }
+    .statement-indent { margin-left: clamp(10px, 2.5vw, 24px); }
     
     .athletes-grid { grid-template-columns: 1fr; gap: 16px; }
     .athlete-info { padding: 16px; }

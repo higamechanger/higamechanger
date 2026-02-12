@@ -123,7 +123,7 @@ function initAnimations() {
     if (statementLines.length) {
       gsap.fromTo(
         statementLines,
-        { x: isMobile ? 0 : -80, y: isMobile ? 40 : 0, opacity: 0, visibility: 'hidden' },
+        { x: -80, y: 0, opacity: 0, visibility: 'hidden' },
         {
           x: 0,
           y: 0,
