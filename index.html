@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Building Winning Personal Brands. Nike-level personal branding for executives and founders.">
+    <meta name="description" content="Building Winning Personal Brands. Icon-level personal branding for Executives and Founders.">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph / Social Sharing -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://higamechanger.com/">
     <meta property="og:title" content="Hi GameChanger">
-    <meta property="og:description" content="Building Winning Personal Brands. Nike-level personal branding for executives and founders.">
+    <meta property="og:description" content="Building Winning Personal Brands. Icon-level personal branding for Executives and Founders.">
     <meta property="og:image" content="https://higamechanger.com/images/social-share.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Hi GameChanger">
-    <meta name="twitter:description" content="Building Winning Personal Brands. Nike-level personal branding for executives and founders.">
+    <meta name="twitter:description" content="Building Winning Personal Brands. Icon-level personal branding for Executives and Founders.">
     <meta name="twitter:image" content="https://higamechanger.com/images/social-share.png">
     
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -29,6 +29,19 @@
 </head>
 <body class="page-home">
     <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Scroll progress indicator -->
+    <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100">
+        <div class="scroll-progress-bar"></div>
+    </div>
+    
+    <!-- Back to top -->
+    <button type="button" class="back-to-top" aria-label="Back to top" title="Back to top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+    
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -47,24 +60,23 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <main id="main">
+
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-video-wrapper" data-parallax>
-            <video class="hero-video" autoplay muted playsinline preload="auto" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAA///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+            <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAA///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
                 <source src="videos/HomepageVideo_Basketball.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <div class="hero-content">
             <h1 class="hero-title">
-                <span class="hero-title-main" data-animate="hero-line">BUILDING WINNING</span>
-                <span class="hero-title-spaced" data-animate="hero-line">personal brands</span>
+                <span class="hero-line-desktop" data-animate="hero-word"><span class="hero-word">Building</span> <span class="hero-word">Winning</span></span>
+                <span class="hero-line-desktop" data-animate="hero-word"><span class="hero-word">Personal</span> <span class="hero-word">Brands</span></span>
             </h1>
-            <p class="hero-subtitle" data-animate="hero-subtitle">
-                Nike Level Strategies for <br class="hero-subtitle-break">Executives and Founders
-            </p>
-            <a href="work-together.html" class="hero-btn">Let's Work Together</a>
+            <p class="hero-subtitle" data-animate="hero-btn">Icon-level strategies for Executives and Founders.</p>
+            <a href="work-together.html" class="hero-btn" data-animate="hero-btn">Let's Work Together</a>
             <a href="#about" class="hero-scroll-arrow" aria-label="Scroll to content">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="24" cy="24" r="22"/>
@@ -79,34 +91,48 @@
     <!-- About Section -->
     <section class="about-section" id="about" data-animate-section>
         <div class="container">
-            <div class="about-content">
+            <div class="about-layout">
                 <h2 class="section-label animate-on-scroll">About</h2>
                 <p class="about-text animate-on-scroll" data-delay="1">
-                    Hi GameChanger is a leading personal branding agency for <span class="inline-serif-italic">executives, entrepreneurs, visionaries</span> <span class="inline-sans">and</span> <span class="inline-serif-italic">founders</span>.
+                    We are a leading personal branding agency for executives, entrepreneurs, visionaries and founders.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Content Section -->
-    <section class="content-section" data-animate-section>
+    <!-- Statement + Story Section -->
+    <section class="story-section" data-animate-section>
         <div class="container">
-            <h2 class="content-title">
-                <span class="content-title-spaced content-title-capitalize animate-on-scroll" data-delay="0">From Raw Talent</span>
-                <span class="content-title-main animate-on-scroll" data-delay="1">to Icon</span>
-            </h2>
-            <p class="content-text animate-on-scroll" data-delay="2">
-                You didn't get here by accident. But raw performance alone <span class="no-wrap">doesn't build legacy.</span><br><br>Using the same strategy behind <strong>Nike's most iconic athletes</strong>, we transform proven executives into <span class="content-desktop-nowrap">brands that command</span><br class="content-mobile-break"> <span class="content-mobile-keep"><span class="inline-serif-italic">attention, momentum,</span> <span class="inline-sans">and</span> <span class="inline-serif-italic">trust</span></span>.
-            </p>
+            <div class="story-layout">
+                <div class="story-left">
+                    <h2 class="statement-title">
+                        <span class="statement-line animate-on-scroll" data-delay="0">For the</span>
+                        <span class="statement-line statement-indent animate-on-scroll" data-delay="1"><span class="statement-game">Game</span><span class="statement-changers"> Changers</span></span>
+                        <span class="statement-line statement-changers-desktop animate-on-scroll" data-delay="2">Changers</span>
+                    </h2>
+                </div>
+                <div class="story-right">
+                    <div class="story-content">
+                        <p class="story-text story-text-bold animate-on-scroll" data-delay="1">
+                            You didn't get here by accident.<br>But power without positioning <span class="story-line-break-mobile">doesn't last.</span>
+                        </p>
+                        <p class="story-text animate-on-scroll" data-delay="2">
+                            We've built game-changing brands for some of the world's most iconic athletes.
+                        </p>
+                        <p class="story-text animate-on-scroll" data-delay="3">
+                            Now we help executives, founders, and leaders build legacies that command trust, attract opportunity, and compound over time.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Athletes Grid Section -->
     <section class="athletes-section" data-animate-section>
         <div class="container">
-            <h2 class="athletes-title">
-                <span class="athletes-title-main animate-on-scroll" data-delay="0">ICONS</span>
-                <span class="athletes-title-spaced animate-on-scroll" data-delay="1">we've worked with</span>
+            <h2 class="athletes-title animate-on-scroll">
+                Icons we've <span class="athletes-title-italic">worked with</span>
             </h2>
             <div class="athletes-grid" data-animate-grid>
                 <div class="athlete-card animate-on-scroll" data-animate-card>
@@ -154,7 +180,7 @@
                 <div class="athlete-card animate-on-scroll" data-animate-card>
                     <div class="athlete-image" style="background-image: url('images/athletes/Jannick Sinner, World %231 Tennis Player.png');"></div>
                     <div class="athlete-info">
-                        <h3 class="athlete-name">Jannick Sinner</h3>
+                        <h3 class="athlete-name">Jannik Sinner</h3>
                         <p class="athlete-title">World #1 Tennis Player</p>
                     </div>
                 </div>
@@ -190,31 +216,39 @@
         </div>
     </section>
 
-    <!-- Work Together Section -->
-    <section class="work-section" id="work-together" data-animate-section>
-        <div class="work-content">
+    <!-- Sticky CTA bar (mobile) -->
+    <div class="sticky-cta-bar" aria-hidden="true">
+        <a href="work-together.html" class="sticky-cta-btn">Let's Work Together</a>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section cta-section-animated" id="work-together" data-animate-section>
         <div class="container">
-            <h2 class="work-title">
-                <span class="work-title-italic animate-on-scroll" data-delay="0">Let's Build Your</span>
-                <span class="work-title-main animate-on-scroll" data-delay="1">GAMECHANGING LEGACY</span>
+            <h2 class="cta-title animate-on-scroll" data-delay="0">
+                <span class="cta-line cta-line-full">Let's build your gamechanging legacy.</span>
             </h2>
-            <a href="work-together.html" class="work-button animate-on-scroll work-button-cta" data-delay="2">Book a Free Discovery Call</a>
-        </div>
+            <a href="work-together.html" class="cta-button animate-on-scroll work-button-cta" data-delay="1">Book Your Free Call</a>
         </div>
     </section>
 
     </main>
+
     <!-- Footer -->
     <footer class="footer" data-animate-section>
         <div class="container">
-            <div class="footer-content animate-on-scroll" data-delay="0">
-                <div class="footer-left">
-                    <p class="footer-copyright">©2026 Hi GameChanger. All rights reserved.</p>
-                </div>
-                <div class="footer-right">
+            <div class="footer-top">
+                <div class="footer-social">
                     <a href="https://www.linkedin.com/company/hi-game-changer" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
                     <a href="https://www.instagram.com/higamechanger" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
                 </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="GameChanger" class="footer-logo-img" width="24" height="24">
+                    <span class="footer-logo-text">GameChanger</span>
+                </div>
+                <p class="footer-copyright">&copy;2026 All rights reserved.</p>
             </div>
         </div>
     </footer>
