@@ -927,7 +927,7 @@ body.loaded {
    BOOKING PAGE
    ============================================ */
 .booking-section {
-    padding: calc(88px + env(safe-area-inset-top)) 0 120px;
+    padding: calc(120px + env(safe-area-inset-top)) 0 120px;
     min-height: 100vh;
     background: var(--bg-primary);
 }
@@ -1109,7 +1109,7 @@ body.loaded {
     .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
     
     /* Booking */
-    .booking-section { padding: calc(80px + env(safe-area-inset-top)) 0 80px; }
+    .booking-section { padding: calc(100px + env(safe-area-inset-top)) 0 80px; }
     .booking-header { margin-bottom: 24px; }
     .booking-title { margin-bottom: 12px; }
     .booking-title-break,
@@ -1145,7 +1145,7 @@ body.loaded {
     .cta-title { font-size: clamp(40px, 11vw, 56px); }
     .cta-button { padding: 14px 28px; font-size: 14px; }
     
-    .booking-section { padding: calc(72px + env(safe-area-inset-top)) 0 60px; }
+    .booking-section { padding: calc(90px + env(safe-area-inset-top)) 0 60px; }
     .booking-embed-wrapper, .booking-iframe { min-height: 650px; height: 650px; }
 }
 
