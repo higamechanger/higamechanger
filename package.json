@@ -1,0 +1,9 @@
+{
+  "name": "higamechanger",
+  "version": "1.0.0",
+  "description": "Hi GameChanger - Building Winning Personal Brands",
+  "scripts": {
+    "preview": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000"
+  }
+}
