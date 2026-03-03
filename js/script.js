@@ -90,7 +90,7 @@ function initAnimations() {
   // ========== SCROLL-TRIGGERED: Section reveals ==========
   const scrollStart = isMobile ? 'top 90%' : 'top 85%';
 
-  gsap.utils.toArray('.animate-on-scroll:not(.athlete-card):not(.statement-line):not(.story-right .animate-on-scroll):not(.cta-title):not(.cta-button):not(.footer-top)').forEach((el) => {
+  gsap.utils.toArray('.animate-on-scroll:not(.statement-line):not(.story-right .animate-on-scroll):not(.cta-title):not(.cta-button)').forEach((el) => {
     const delay = parseInt(el.dataset.delay || 0, 10) * 0.15;
     gsap.fromTo(
       el,
@@ -165,36 +165,10 @@ function initAnimations() {
     }
   }
 
-  // ========== ATHLETE GRID: Staggered cards ==========
-  const athleteCards = gsap.utils.toArray('.athlete-card');
-  if (athleteCards.length) {
-    gsap.fromTo(
-      athleteCards,
-      { y: isMobile ? 40 : 60, opacity: 0, visibility: 'hidden' },
-      {
-        y: 0,
-        opacity: 1,
-        visibility: 'visible',
-        duration: isMobile ? 0.5 : 0.65,
-        stagger: {
-          amount: isMobile ? 0.4 : 0.6,
-          from: 'start',
-          ease: staggerEase,
-        },
-        ease: easeOutExpo,
-        scrollTrigger: {
-          trigger: '.athletes-grid',
-          start: isMobile ? 'top 85%' : 'top 78%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-  }
-
   // ========== FOOTER: Staggered reveal ==========
   const footerSection = document.querySelector('.footer[data-animate-section]');
   if (footerSection) {
-    const footerElements = gsap.utils.toArray('.footer-top, .footer-divider, .footer-bottom');
+    const footerElements = gsap.utils.toArray('.footer-bottom');
     gsap.fromTo(
       footerElements,
       { y: 24, opacity: 0, visibility: 'hidden' },
@@ -235,39 +209,6 @@ function initAnimations() {
         },
       }
     );
-  }
-
-  // ========== ATHLETE CARDS: 3D tilt on mouse move (desktop) ==========
-  if (!window.matchMedia('(max-width: 768px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.athlete-card').forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-        const tiltX = (y - 0.5) * 6;
-        const tiltY = (x - 0.5) * -6;
-        gsap.to(card, {
-          y: -8,
-          scale: 1.02,
-          rotateX: tiltX,
-          rotateY: tiltY,
-          transformPerspective: 1000,
-          duration: 0.35,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          y: 0,
-          scale: 1,
-          rotateX: 0,
-          rotateY: 0,
-          duration: 0.5,
-          ease: 'power2.out',
-        });
-      });
-    });
   }
 
   // ========== CTA BUTTONS: Premium hover (desktop only) ==========

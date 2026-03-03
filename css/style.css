@@ -553,7 +553,7 @@ body.loaded {
    STATEMENT + STORY SECTION
    ============================================ */
 .story-section {
-    padding: var(--space-2xl) 0 120px;
+    padding: var(--space-2xl) 0 160px;
     background: var(--bg-primary);
     overflow: hidden;
 }
@@ -737,7 +737,7 @@ body.loaded {
    ============================================ */
 .cta-section {
     position: relative;
-    padding: 140px 0;
+    padding: 180px 0 140px;
     min-height: 70vh;
     display: flex;
     align-items: center;
@@ -1073,7 +1073,7 @@ body.loaded {
     .about-text { font-size: clamp(24px, 6.5vw, 32px); font-weight: 500; line-height: 1.4; letter-spacing: -0.02em; }
     
     /* Statement + Story */
-    .story-section { padding: var(--space-2xl) 0 var(--space-lg); }
+    .story-section { padding: var(--space-2xl) 0 var(--space-2xl); }
     .story-layout {
         grid-template-columns: 1fr;
         gap: 56px;
@@ -1101,7 +1101,7 @@ body.loaded {
     .athlete-title { font-size: 10px; }
     
     /* CTA */
-    .cta-section { padding: 100px 0; min-height: 60vh; }
+    .cta-section { padding: 120px 0 100px; min-height: 60vh; }
     .cta-title { font-size: clamp(44px, 12vw, 80px); margin-bottom: 36px; text-align: center; align-items: center; }
     .cta-line-full { font-family: var(--font-sans); font-style: normal; font-weight: 400; text-align: center; }
     .cta-button { padding: 15px 32px; font-size: 14px; }
