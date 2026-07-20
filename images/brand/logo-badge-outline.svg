@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<defs></defs>
+<circle cx="200" cy="200" r="194" fill="#F4F0E7" stroke="#171310" stroke-width="4"></circle>
+<mask id="gf" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="1000"><rect width="1000" height="1000" fill="#fff"></rect><text class="m" x="150" y="235" text-anchor="middle" font-size="196" fill="#000" stroke="#000" stroke-width="11" stroke-linejoin="round">G</text></mask>
+<text class="m" x="232" y="305" text-anchor="middle" font-size="196" fill="#171310" mask="url(#gf)">C</text>
+<text class="m" x="150" y="235" text-anchor="middle" font-size="196" fill="#171310">G</text>
+</svg>

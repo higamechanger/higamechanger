@@ -1,396 +1,210 @@
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+/* GameChanger site interactions */
 
-// Progressive enhancement
-document.documentElement.classList.remove('no-js');
-document.documentElement.classList.add('js-enabled');
-window.addEventListener('load', () => document.body.classList.add('loaded'));
+(function () {
+  const doc = document.documentElement;
+  const nav = document.getElementById("site-nav");
+  const progress = document.getElementById("scroll-progress");
+  const cursor = document.getElementById("gc-cursor");
+  const toggle = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("nav-links");
+  const heroBg = document.getElementById("hero-bg");
+  const spineLetters = document.querySelectorAll("[data-spine-letter]");
+  const reveals = document.querySelectorAll("[data-reveal]");
 
-// Respect reduced motion
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (prefersReducedMotion) {
-  document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-    el.style.opacity = '1';
-    el.style.visibility = 'visible';
-  });
-} else {
-  initAnimations();
-}
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function initAnimations() {
-  const easeOutExpo = 'power3.out';
-  const easeOutQuart = 'power2.out';
-  const staggerEase = 'power2.inOut';
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (canHover && cursor) {
+    document.body.classList.add("has-custom-cursor");
+  }
 
-  // ========== HERO: Cinematic entrance ==========
-  const heroTimeline = gsap.timeline({ defaults: { ease: easeOutExpo } });
+  function onScroll() {
+    const y = window.scrollY || window.pageYOffset;
+    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const pct = Math.min(100, (y / max) * 100);
 
-  heroTimeline
-    .fromTo('#navbar',
-      { y: -24, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8 }
-    )
-    .fromTo(isMobile ? '.hero-word' : '[data-animate="hero-word"]',
-      { y: 80, opacity: 0 },
-      { y: 0, opacity: 1, stagger: isMobile ? 0.1 : 0.15, duration: 0.9, ease: 'power4.out' },
-      '-=0.4'
-    )
-    .fromTo('[data-animate="hero-btn"]',
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7 },
-      '-=0.4'
-    )
-    .fromTo('.hero-scroll-arrow',
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6 },
-      '-=0.3'
-    );
+    if (nav && nav.classList.contains("site-nav--fixed")) {
+      nav.classList.toggle("is-scrolled", y > 60);
+    }
 
-  // Hero video fade-in + parallax
-  const heroVideoWrapper = document.querySelector('.hero-video-wrapper');
-  const heroVideoEl = document.querySelector('.hero-video');
-  const isMobileOrReduced = window.matchMedia('(max-width: 768px), (prefers-reduced-motion: reduce)').matches;
+    if (progress) {
+      progress.style.width = pct + "%";
+    }
 
-  if (heroVideoWrapper && heroVideoEl) {
-    const videoOpacity = 0.55;
-    gsap.fromTo(heroVideoEl, { opacity: 0 }, { opacity: videoOpacity, duration: 1.5, delay: 0.2 });
+    if (heroBg && !reduceMotion) {
+      heroBg.style.transform = "translateY(" + y * 0.25 + "px)";
+    }
 
-    // Seamless looping (desktop + mobile)
-    heroVideoEl.addEventListener('timeupdate', () => {
-      if (heroVideoEl.duration && heroVideoEl.duration - heroVideoEl.currentTime < 0.5) {
-        heroVideoEl.currentTime = 0.1;
-      }
-    });
-    heroVideoEl.addEventListener('ended', () => {
-      heroVideoEl.currentTime = 0.1;
-      heroVideoEl.play();
-    });
-    heroVideoEl.addEventListener('canplay', () => {
-      if (heroVideoEl.paused) heroVideoEl.play();
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden && heroVideoEl.paused) heroVideoEl.play();
-    });
-
-    if (!isMobileOrReduced) {
-      gsap.to(heroVideoWrapper, {
-        yPercent: 15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2,
-        },
+    if (spineLetters.length && !reduceMotion) {
+      spineLetters.forEach(function (el, i) {
+        const progressLetter = Math.max(0, Math.min(1, (y - i * 22) / 220));
+        el.style.opacity = String(1 - progressLetter);
+        el.style.transform = "translateY(" + progressLetter * 26 + "px)";
       });
     }
   }
 
-  // ========== SCROLL-TRIGGERED: Section reveals ==========
-  const scrollStart = isMobile ? 'top 90%' : 'top 85%';
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
-  gsap.utils.toArray('.animate-on-scroll:not(.statement-line):not(.story-right .animate-on-scroll):not(.cta-title):not(.cta-button)').forEach((el) => {
-    const delay = parseInt(el.dataset.delay || 0, 10) * 0.15;
-    gsap.fromTo(
-      el,
-      { y: isMobile ? 30 : 50, opacity: 0, visibility: 'hidden' },
-      {
-        y: 0,
-        opacity: 1,
-        visibility: 'visible',
-        duration: isMobile ? 0.7 : 0.9,
-        delay,
-        ease: easeOutExpo,
-        scrollTrigger: {
-          trigger: el.closest('[data-animate-section]') || el,
-          start: scrollStart,
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-        },
-      }
+  if (canHover && cursor) {
+    window.addEventListener(
+      "mousemove",
+      function (e) {
+        cursor.style.transform =
+          "translate3d(" + e.clientX + "px," + e.clientY + "px,0) translate(-50%,-50%)";
+      },
+      { passive: true }
     );
-  });
 
-  // ========== STATEMENT + STORY: Swipe-in reveals ==========
-  const storySection = document.querySelector('.story-section');
-  const storyLeft = document.querySelector('.story-left');
-  const storyRight = document.querySelector('.story-right');
-
-  if (storySection && storyLeft) {
-    // Left side: Statement title swipes in from left
-    const statementLines = gsap.utils.toArray('.statement-line');
-    if (statementLines.length) {
-      gsap.fromTo(
-        statementLines,
-        { x: -80, y: 0, opacity: 0, visibility: 'hidden' },
-        {
-          x: 0,
-          y: 0,
-          opacity: 1,
-          visibility: 'visible',
-          duration: 1,
-          stagger: 0.12,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: storySection,
-            start: isMobile ? 'top 85%' : 'top 75%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }
-
-    // Right side: Story content swipes in from right
-    if (storyRight) {
-      const storyElements = gsap.utils.toArray('.story-right .animate-on-scroll');
-      gsap.fromTo(
-        storyElements,
-        { x: isMobile ? 0 : 60, y: isMobile ? 30 : 0, opacity: 0, visibility: 'hidden' },
-        {
-          x: 0,
-          y: 0,
-          opacity: 1,
-          visibility: 'visible',
-          duration: 0.9,
-          stagger: 0.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: storySection,
-            start: isMobile ? 'top 80%' : 'top 70%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }
-  }
-
-  // ========== FOOTER: Staggered reveal ==========
-  const footerSection = document.querySelector('.footer[data-animate-section]');
-  if (footerSection) {
-    const footerElements = gsap.utils.toArray('.footer-bottom');
-    gsap.fromTo(
-      footerElements,
-      { y: 24, opacity: 0, visibility: 'hidden' },
-      {
-        y: 0,
-        opacity: 1,
-        visibility: 'visible',
-        duration: 0.8,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: footerSection,
-          start: isMobile ? 'top 92%' : 'top 88%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-  }
-
-  // ========== CTA SECTION: Scroll-triggered reveal ==========
-  const ctaTitle = document.querySelector('.cta-title');
-  const ctaBtn = document.querySelector('.cta-button');
-  if (ctaTitle && ctaBtn) {
-    gsap.fromTo(
-      [ctaTitle, ctaBtn],
-      { y: 40, opacity: 0, visibility: 'hidden' },
-      {
-        y: 0,
-        opacity: 1,
-        visibility: 'visible',
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power4.out',
-        scrollTrigger: {
-          trigger: '.cta-section',
-          start: isMobile ? 'top 85%' : 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-  }
-
-  // ========== CTA BUTTONS: Premium hover (desktop only) ==========
-  if (!window.matchMedia('(max-width: 768px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.hero-btn, .cta-button, .work-button-cta').forEach((btn) => {
-      if (btn) {
-        btn.addEventListener('mouseenter', () => {
-          gsap.to(btn, { scale: 1.02, y: -3, duration: 0.3, ease: easeOutQuart });
-        });
-        btn.addEventListener('mouseleave', () => {
-          gsap.to(btn, { scale: 1, y: 0, duration: 0.35, ease: easeOutQuart });
-        });
-      }
+    document.addEventListener("mouseover", function (e) {
+      const hot = e.target.closest && e.target.closest("a, button");
+      cursor.classList.toggle("is-hover", !!hot);
     });
   }
 
-  // ========== HERO BUTTON: Subtle magnetic effect (desktop) ==========
-  const heroBtn = document.querySelector('.hero-btn');
-  if (heroBtn && !window.matchMedia('(max-width: 768px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    heroBtn.addEventListener('mousemove', (e) => {
-      const rect = heroBtn.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-      gsap.to(heroBtn, {
-        x: x * 6,
-        y: y * 3 - 3,
-        scale: 1.02,
-        duration: 0.25,
-        ease: 'power2.out',
-        overwrite: 'auto',
+  if (toggle && navLinks && nav) {
+    toggle.addEventListener("click", function () {
+      const open = !navLinks.classList.contains("is-open");
+      navLinks.classList.toggle("is-open", open);
+      nav.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("is-open");
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
       });
     });
-    heroBtn.addEventListener('mouseleave', () => {
-      gsap.to(heroBtn, { x: 0, y: 0, scale: 1, duration: 0.4, ease: 'power2.out' });
+  }
+
+  if (reveals.length && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    reveals.forEach(function (el) {
+      io.observe(el);
     });
-  }
-
-} // end initAnimations
-
-// ========== SCROLL PROGRESS ==========
-const scrollProgressBar = document.querySelector('.scroll-progress-bar');
-if (scrollProgressBar) {
-  function updateScrollProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
-    scrollProgressBar.style.width = progress + '%';
-    scrollProgressBar.setAttribute('aria-valuenow', Math.round(progress));
-  }
-  window.addEventListener('scroll', () => {
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      requestAnimationFrame(updateScrollProgress);
-    }
-  }, { passive: true });
-  updateScrollProgress();
-}
-
-// ========== BACK TO TOP ==========
-const backToTopBtn = document.querySelector('.back-to-top');
-if (backToTopBtn) {
-  const hero = document.querySelector('.hero');
-  const scrollThreshold = hero ? hero.offsetHeight * 0.6 : 400;
-  function toggleBackToTop() {
-    if (window.scrollY > scrollThreshold) {
-      backToTopBtn.classList.add('visible');
-    } else {
-      backToTopBtn.classList.remove('visible');
-    }
-  }
-  window.addEventListener('scroll', () => {
-    requestAnimationFrame(toggleBackToTop);
-  }, { passive: true });
-  toggleBackToTop();
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-// ========== STICKY CTA BAR (MOBILE) ==========
-const stickyCtaBar = document.querySelector('.sticky-cta-bar');
-if (stickyCtaBar && window.matchMedia('(max-width: 768px)').matches) {
-  const hero = document.querySelector('.hero');
-  const ctaSection = document.querySelector('.cta-section');
-  function toggleStickyCta() {
-    const scrollY = window.scrollY;
-    const heroBottom = hero ? hero.offsetHeight : 400;
-    const ctaTop = ctaSection ? ctaSection.offsetTop - 200 : 9999;
-    if (scrollY > heroBottom && scrollY < ctaTop) {
-      stickyCtaBar.classList.add('visible');
-    } else {
-      stickyCtaBar.classList.remove('visible');
-    }
-  }
-  window.addEventListener('scroll', () => {
-    requestAnimationFrame(toggleStickyCta);
-  }, { passive: true });
-  toggleStickyCta();
-}
-
-// ========== SMOOTH SCROLL ==========
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener('click', function (e) {
-    const href = this.getAttribute('href');
-    if (href === '#') return;
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      const navbarHeight = document.getElementById('navbar')?.offsetHeight || 80;
-      const offsetTop = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
-      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-    }
-  });
-});
-
-// ========== NAVBAR: Scroll effect ==========
-const navbar = document.getElementById('navbar');
-let ticking = false;
-
-function updateNavbar() {
-  const scrollY = window.scrollY;
-  if (scrollY > 80) {
-    navbar.style.background = '#fafafa';
-    navbar.style.boxShadow = '0 2px 24px rgba(0,0,0,0.08)';
   } else {
-    navbar.style.background = '#f5f5f5';
-    navbar.style.boxShadow = 'none';
+    reveals.forEach(function (el) {
+      el.classList.add("is-visible");
+    });
   }
-  ticking = false;
-}
+})();
 
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(updateNavbar);
-    ticking = true;
-  }
-}, { passive: true });
+/* Article page renderer */
+(function () {
+  const root = document.getElementById("article-root");
+  if (!root) return;
 
-// ========== ACTIVE NAV ==========
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-
-function setActiveNav() {
-  const scrollY = window.scrollY;
-  const headerOffset = 120;
-  let current = '';
-  sections.forEach((section) => {
-    const top = section.offsetTop - headerOffset;
-    const height = section.offsetHeight;
-    if (scrollY >= top && scrollY < top + height) {
-      current = section.getAttribute('id');
+  const articles = {
+    positioning: {
+      tag: "Positioning",
+      readTime: "6 min read",
+      src: "images/assets/positioning-article.jpg",
+      title: "Nobody Actually Wants Followers.",
+      paragraphs: [
+        "They want what followers are supposed to create — opportunity, not applause.",
+        "Most executives chase visibility because it's measurable. A follower count, an impression, a like. But visibility without positioning is just noise with an audience.",
+        "The leaders who actually move — into boardrooms, onto stages, into rooms they weren't invited to before — didn't get there by being seen the most. They got there by being the clearest.",
+        "Clarity is what turns an audience into opportunity. It's the difference between being known and being chosen."
+      ]
+    },
+    presence: {
+      tag: "Presence",
+      readTime: "5 min read",
+      src: "images/assets/presence-article.jpg",
+      title: "The Difference Ladder.",
+      paragraphs: [
+        'Nobody follows "experienced." They follow a point of view.',
+        "Experience is table stakes at the level most executives operate. It's assumed, not differentiating. What separates the leaders who compound influence from the ones who plateau is a specific, ownable point of view — one only they could hold.",
+        "Building that point of view isn't about saying something new. It's about saying the thing only your experience allows you to say, and saying it consistently enough that it becomes yours."
+      ]
+    },
+    influence: {
+      tag: "Influence",
+      readTime: "7 min read",
+      src: "images/assets/influence-article.jpg",
+      title: "Build What Only You Can Own.",
+      paragraphs: [
+        "The rarest leadership skill isn't vision. It's movement.",
+        "Plenty of executives can articulate where their industry is headed. Few can build the platform that gets them there first, and fewer still can make that platform unmistakably theirs.",
+        "Ownership is what makes a brand compound instead of expire. Borrowed positioning erodes the moment someone else copies it. Ownable positioning gets stronger the more it's repeated — because it was never available to anyone else in the first place."
+      ]
+    },
+    discipline: {
+      tag: "Discipline",
+      readTime: "5 min read",
+      src: "images/assets/discipline-article.png",
+      title: "The Off-Season Is Where Brands Are Won.",
+      paragraphs: [
+        "The work nobody sees is the work that compounds.",
+        "Every executive brand that looks effortless in public was built somewhere private — in the reps nobody applauded, the drafts nobody read, the positioning work done long before there was an audience.",
+        "Discipline isn't a personality trait here. It's a system: the unglamorous, repeatable work of showing up in the same voice, on the same territory, long enough for it to become recognizable.",
+        "There is no shortcut to that recognition. There is only the off-season, done well."
+      ]
+    },
+    perception: {
+      tag: "Presence",
+      readTime: "5 min read",
+      src: "images/assets/perception-article.png",
+      title: "Stop Managing Perception. Start Owning It.",
+      paragraphs: [
+        "Reactive leaders manage their image. Category leaders define it.",
+        "Perception management is a defensive posture — reacting to how you're seen, correcting the record, hoping the narrative settles somewhere flattering. It's exhausting, and it never compounds.",
+        "Ownership is the opposite. It means deciding, in advance, what you stand for — then building every piece of your presence, from your bio to your platform, to reinforce that one thing.",
+        "The leaders who feel most in control of their reputation aren't the ones managing it hardest. They're the ones who defined it first."
+      ]
+    },
+    scale: {
+      tag: "Scale",
+      readTime: "6 min read",
+      src: "images/assets/scale-article.png",
+      title: "The Platforms That Compound.",
+      paragraphs: [
+        "One system, applied consistently, beats ten tactics applied once.",
+        "Most brand-building advice is a list of tactics: post here, network there, speak at this event. Tactics generate a spike. They rarely generate scale.",
+        "Scale comes from platforms — the repeatable structures that keep producing visibility and opportunity long after the initial effort. A content system. A speaking platform. A signature body of work.",
+        "Build the platform once, run it consistently, and influence compounds on its own schedule."
+      ]
     }
-  });
-  navLinks.forEach((link) => {
-    link.classList.remove('nav-link-active');
-    if (link.getAttribute('href') === '#' + current) {
-      link.classList.add('nav-link-active');
-    }
-  });
-  // Highlight Work Together when in CTA section
-  document.querySelectorAll('.nav-link-work').forEach((link) => {
-    link.classList.toggle('nav-link-active', current === 'work-together');
-  });
-}
+  };
 
-let navTicking = false;
-window.addEventListener('scroll', () => {
-  if (!navTicking) {
-    requestAnimationFrame(() => { setActiveNav(); navTicking = false; });
-    navTicking = true;
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("a") || "positioning";
+  const article = articles[slug] || articles.positioning;
+
+  document.title = article.title + " — GameChanger Review";
+
+  const img = root.querySelector("[data-article-img]");
+  const tag = root.querySelector("[data-article-tag]");
+  const read = root.querySelector("[data-article-read]");
+  const title = root.querySelector("[data-article-title]");
+  const body = root.querySelector("[data-article-body]");
+
+  if (img) {
+    img.src = article.src;
+    img.alt = article.title;
   }
-}, { passive: true });
-
-window.addEventListener('load', () => {
-  setActiveNav();
-  if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-});
-
-// Refresh ScrollTrigger on resize for responsive accuracy
-let resizeTimeout;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-  }, 150);
-});
+  if (tag) tag.textContent = article.tag;
+  if (read) read.textContent = "· " + article.readTime;
+  if (title) title.textContent = article.title;
+  if (body) {
+    body.innerHTML = article.paragraphs
+      .map(function (p) {
+        return "<p>" + p + "</p>";
+      })
+      .join("");
+  }
+})();

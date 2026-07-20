@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<defs>
+<path id="rt" d="M 66 200 A 134 134 0 0 1 334 200" fill="none"></path>
+<path id="rb" d="M 68 200 A 132 132 0 0 0 332 200" fill="none"></path></defs>
+<circle cx="200" cy="200" r="196" fill="#5A1220"></circle>
+<mask id="gf" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="1000"><rect width="1000" height="1000" fill="#fff"></rect><text class="m" x="168" y="222" text-anchor="middle" font-size="150" fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round">G</text></mask>
+<text class="m" x="228" y="278" text-anchor="middle" font-size="150" fill="#F4F0E7" mask="url(#gf)">C</text>
+<text class="m" x="168" y="222" text-anchor="middle" font-size="150" fill="#F4F0E7">G</text>
+<text style="font-family:&#39;Work Sans&#39;,Arial,sans-serif;font-weight:600" font-size="19" letter-spacing="6" fill="#F4F0E7"><textPath href="#rt" startOffset="50%" text-anchor="middle">GAMECHANGER</textPath></text>
+<text style="font-family:&#39;Work Sans&#39;,Arial,sans-serif;font-weight:600" font-size="14" letter-spacing="5" fill="#D98A6A"><textPath href="#rb" startOffset="50%" text-anchor="middle">EST. MMXXIV</textPath></text>
+</svg>

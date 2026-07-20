@@ -5,11 +5,12 @@
 - **`main`** = Live site (higamechanger.com)
 - **`staging`** = Testing branch for previewing changes before pushing live
 
-## Workflow
+## Pages
 
-1. **Make changes on staging** – All edits happen on the `staging` branch
-2. **Preview locally** – Run `npm run preview` and open http://localhost:3000
-3. **Push live when ready** – Merge `staging` into `main` and push
+- `index.html` — Home
+- `review.html` — GameChanger Review (blog index)
+- `article.html?a=<slug>` — Article template
+- `book.html` — Book a Discovery Call
 
 ## Commands
 
