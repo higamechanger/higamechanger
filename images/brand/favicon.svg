@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <style type="text/css">
+      .m {
+        font-family: "Newsreader", "Times New Roman", Times, Georgia, serif;
+        font-weight: 500;
+      }
+    </style>
+    <mask id="gf" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+      <rect width="400" height="400" fill="#fff"/>
+      <text class="m" x="150" y="235" text-anchor="middle" font-size="196" fill="#000" stroke="#000" stroke-width="11" stroke-linejoin="round">G</text>
+    </mask>
+  </defs>
+  <circle cx="200" cy="200" r="196" fill="#5A1220"/>
+  <text class="m" x="232" y="305" text-anchor="middle" font-size="196" fill="#F4F0E7" mask="url(#gf)">C</text>
+  <text class="m" x="150" y="235" text-anchor="middle" font-size="196" fill="#F4F0E7">G</text>
+</svg>
