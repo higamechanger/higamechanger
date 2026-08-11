@@ -1,0 +1,8 @@
+.tools
+node_modules
+exports
+.git
+videos
+images/athletes
+*.dmg
+.DS_Store

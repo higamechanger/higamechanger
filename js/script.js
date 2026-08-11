@@ -16,6 +16,7 @@
   const magneticEls = document.querySelectorAll("[data-magnetic]");
   const countEls = document.querySelectorAll("[data-count]");
   const sectionSpies = document.querySelectorAll("[data-spy]");
+  const portrait = document.querySelector(".about-portrait img");
 
   const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -24,14 +25,12 @@
   let scrollY = window.scrollY || 0;
   let ticking = false;
 
-  /* ——— Boot ——— */
   body.classList.add("is-ready");
 
   if (canHover && cursor && !reduceMotion) {
     body.classList.add("has-custom-cursor");
   }
 
-  /* ——— Smooth anchor scroll with fixed-nav offset ——— */
   document.addEventListener("click", function (e) {
     const link = e.target.closest && e.target.closest('a[href^="#"]');
     if (!link) return;
@@ -47,13 +46,9 @@
     }
   });
 
-  /* ——— Cursor (lerped) + magnetic pull ——— */
   if (canHover && cursor && !reduceMotion) {
     const mouse = { x: -100, y: -100 };
     const cur = { x: -100, y: -100 };
-    let hovering = false;
-    let magX = 0;
-    let magY = 0;
 
     window.addEventListener(
       "mousemove",
@@ -65,9 +60,8 @@
     );
 
     document.addEventListener("mouseover", function (e) {
-      const hot = e.target.closest && e.target.closest("a, button, .cta-btn, .article-card, .include-card");
-      hovering = !!hot;
-      cursor.classList.toggle("is-hover", hovering);
+      const hot = e.target.closest && e.target.closest("a, button, .cta-btn, .article-card, .include-card, .phase-row");
+      cursor.classList.toggle("is-hover", !!hot);
       cursor.classList.toggle("is-view", !!(hot && hot.classList && hot.classList.contains("article-card")));
     });
 
@@ -76,27 +70,22 @@
         const rect = el.getBoundingClientRect();
         const dx = e.clientX - (rect.left + rect.width / 2);
         const dy = e.clientY - (rect.top + rect.height / 2);
-        magX = dx * 0.22;
-        magY = dy * 0.28;
-        el.style.transform = "translate3d(" + magX + "px," + magY + "px,0)";
+        el.style.transform = "translate3d(" + dx * 0.1 + "px," + dy * 0.12 + "px,0)";
       });
       el.addEventListener("mouseleave", function () {
-        magX = 0;
-        magY = 0;
         el.style.transform = "";
       });
     });
 
     (function loopCursor() {
-      cur.x += (mouse.x - cur.x) * 0.22;
-      cur.y += (mouse.y - cur.y) * 0.22;
+      cur.x += (mouse.x - cur.x) * 0.18;
+      cur.y += (mouse.y - cur.y) * 0.18;
       cursor.style.transform =
         "translate3d(" + cur.x + "px," + cur.y + "px,0) translate(-50%,-50%)";
       requestAnimationFrame(loopCursor);
     })();
   }
 
-  /* ——— Scroll-driven motion ——— */
   function updateScroll() {
     const y = scrollY;
     const max = Math.max(1, doc.scrollHeight - window.innerHeight);
@@ -111,20 +100,28 @@
     }
 
     if (heroBg && !reduceMotion) {
-      heroBg.style.transform = "translate3d(0," + y * 0.28 + "px,0)";
+      heroBg.style.transform = "translate3d(0," + y * 0.12 + "px,0)";
+    }
+
+    if (portrait && !reduceMotion) {
+      const rect = portrait.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const mid = rect.top + rect.height / 2 - window.innerHeight / 2;
+        portrait.style.transform = "translate3d(0," + mid * -0.04 + "px,0) scale(1.03)";
+      }
     }
 
     if (spineLetters.length && !reduceMotion) {
-      if (!body.classList.contains("spine-live")) return;
-      spineLetters.forEach(function (el, i) {
-        const p = Math.max(0, Math.min(1, (y - i * 18) / 200));
-        const ease = p * p * (3 - 2 * p);
-        el.style.opacity = String(1 - ease * 0.92);
-        el.style.transform = "translate3d(0," + ease * 32 + "px,0)";
-      });
+      if (body.classList.contains("spine-live")) {
+        spineLetters.forEach(function (el, i) {
+          const p = Math.max(0, Math.min(1, (y - i * 18) / 200));
+          const ease = p * p * (3 - 2 * p);
+          el.style.opacity = String(1 - ease * 0.92);
+          el.style.transform = "translate3d(0," + ease * 32 + "px,0)";
+        });
+      }
     }
 
-    /* Nav spy */
     if (sectionSpies.length && navLinks) {
       let current = "";
       sectionSpies.forEach(function (sec) {
@@ -167,7 +164,6 @@
     body.classList.add("spine-live");
   }
 
-  /* ——— Mobile menu ——— */
   function closeMenu() {
     if (!navLinks || !nav || !toggle) return;
     navLinks.classList.remove("is-open");
@@ -198,7 +194,6 @@
     });
   }
 
-  /* ——— Intersection reveals ——— */
   function revealEl(el) {
     el.classList.add("is-visible");
   }
@@ -210,28 +205,20 @@
           if (!entry.isIntersecting) return;
           revealEl(entry.target);
 
-          /* Stagger children inside section */
           const kids = entry.target.querySelectorAll("[data-reveal-child]");
           kids.forEach(function (kid, i) {
-            kid.style.transitionDelay = 0.08 + i * 0.09 + "s";
+            kid.style.transitionDelay = 0.08 + i * 0.08 + "s";
             kid.classList.add("is-visible");
           });
 
-          /* Cascade media + counters inside this section */
           entry.target.querySelectorAll("[data-media-reveal]").forEach(function (media) {
             media.classList.add("is-revealed");
-          });
-          entry.target.querySelectorAll("[data-count]").forEach(function (el) {
-            if (!el.dataset.counted) {
-              el.dataset.counted = "1";
-              animateCount(el);
-            }
           });
 
           io.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -12% 0px" }
     );
 
     reveals.forEach(function (el) {
@@ -249,7 +236,7 @@
           itemIo.unobserve(el);
         });
       },
-      { threshold: 0.18, rootMargin: "0px 0px -6% 0px" }
+      { threshold: 0.2, rootMargin: "0px 0px -12% 0px" }
     );
 
     revealItems.forEach(function (el) {
@@ -264,7 +251,7 @@
           mediaIo.unobserve(entry.target);
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.18 }
     );
 
     mediaReveals.forEach(function (el) {
@@ -279,8 +266,7 @@
     document.querySelectorAll("[data-reveal-child]").forEach(revealEl);
   }
 
-  /* ——— Stat count-up ——— */
-  function animateCount(el) {
+  function animateCount(el, delay) {
     const raw = el.getAttribute("data-count") || "0";
     const prefix = el.getAttribute("data-prefix") || "";
     const suffix = el.getAttribute("data-suffix") || "";
@@ -289,43 +275,75 @@
       el.textContent = prefix + raw + suffix;
       return;
     }
-    const isFloat = String(raw).indexOf(".") !== -1;
-    const duration = 1400;
-    const start = performance.now();
 
-    function frame(now) {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const val = target * eased;
-      el.textContent =
-        prefix + (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
-      if (t < 1) requestAnimationFrame(frame);
-      else el.textContent = prefix + raw + suffix;
+    el.textContent = prefix + (String(raw).indexOf(".") !== -1 ? "0.0" : "0") + suffix;
+
+    function run() {
+      if (reduceMotion) {
+        el.textContent = prefix + raw + suffix;
+        return;
+      }
+      const isFloat = String(raw).indexOf(".") !== -1;
+      const duration = 1400;
+      const start = performance.now();
+
+      function frame(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = target * eased;
+        el.textContent =
+          prefix + (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
+        if (t < 1) requestAnimationFrame(frame);
+        else el.textContent = prefix + raw + suffix;
+      }
+
+      requestAnimationFrame(frame);
     }
 
-    if (reduceMotion) {
-      el.textContent = prefix + raw + suffix;
+    if (delay) {
+      setTimeout(run, delay);
     } else {
-      requestAnimationFrame(frame);
+      run();
     }
   }
 
-  if (countEls.length && "IntersectionObserver" in window) {
-    const countIo = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          animateCount(entry.target);
-          countIo.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.5 }
-    );
-    countEls.forEach(function (el) {
-      countIo.observe(el);
+  function startCounts(root) {
+    const els = root
+      ? root.querySelectorAll("[data-count]")
+      : countEls;
+    els.forEach(function (el, i) {
+      if (el.dataset.counted) return;
+      el.dataset.counted = "1";
+      animateCount(el, 120 + i * 140);
     });
-  } else {
-    countEls.forEach(animateCount);
+  }
+
+  if (countEls.length) {
+    if ("IntersectionObserver" in window && !reduceMotion) {
+      const statsBlocks = document.querySelectorAll(".about-stats");
+      const countIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            startCounts(entry.target);
+            countIo.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.35, rootMargin: "0px 0px -8% 0px" }
+      );
+
+      if (statsBlocks.length) {
+        statsBlocks.forEach(function (block) {
+          countIo.observe(block);
+        });
+      } else {
+        countEls.forEach(function (el) {
+          countIo.observe(el);
+        });
+      }
+    } else {
+      startCounts(null);
+    }
   }
 })();
 
@@ -338,7 +356,7 @@
     positioning: {
       tag: "Positioning",
       readTime: "6 min read",
-      src: "images/assets/positioning-article.jpg",
+      src: "images/assets/positioning-article.jpg?v=27",
       title: "Nobody Actually Wants Followers.",
       paragraphs: [
         "They want what followers are supposed to create — opportunity, not applause.",
@@ -350,7 +368,7 @@
     presence: {
       tag: "Presence",
       readTime: "5 min read",
-      src: "images/assets/presence-article.jpg",
+      src: "images/assets/presence-article.jpg?v=27",
       title: "The Difference Ladder.",
       paragraphs: [
         'Nobody follows "experienced." They follow a point of view.',
@@ -361,7 +379,7 @@
     influence: {
       tag: "Influence",
       readTime: "7 min read",
-      src: "images/assets/influence-article.jpg",
+      src: "images/assets/influence-article.jpg?v=29",
       title: "Build What Only You Can Own.",
       paragraphs: [
         "The rarest leadership skill isn't vision. It's movement.",
@@ -372,7 +390,7 @@
     discipline: {
       tag: "Discipline",
       readTime: "5 min read",
-      src: "images/assets/discipline-article.png",
+      src: "images/assets/discipline-article.jpg?v=28",
       title: "The Off-Season Is Where Brands Are Won.",
       paragraphs: [
         "The work nobody sees is the work that compounds.",
@@ -384,7 +402,7 @@
     perception: {
       tag: "Presence",
       readTime: "5 min read",
-      src: "images/assets/perception-article.png",
+      src: "images/assets/perception-article.jpg?v=28",
       title: "Stop Managing Perception. Start Owning It.",
       paragraphs: [
         "Reactive leaders manage their image. Category leaders define it.",
@@ -396,7 +414,7 @@
     scale: {
       tag: "Scale",
       readTime: "6 min read",
-      src: "images/assets/scale-article.png",
+      src: "images/assets/scale-article.jpg?v=28",
       title: "The Platforms That Compound.",
       paragraphs: [
         "One system, applied consistently, beats ten tactics applied once.",

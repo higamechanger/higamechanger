@@ -1,7 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 440" width="450" height="440">
-<defs></defs>
-<rect width="450" height="440" fill="#171310"></rect>
-<mask id="gf" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="1000"><rect width="1000" height="1000" fill="#fff"></rect><text class="m" x="180" y="270" text-anchor="middle" font-size="300" fill="#000" stroke="#000" stroke-width="16" stroke-linejoin="round">G</text></mask>
-<text class="m" x="290" y="380" text-anchor="middle" font-size="300" fill="#F4F0E7" mask="url(#gf)">C</text>
-<text class="m" x="180" y="270" text-anchor="middle" font-size="300" fill="#F4F0E7">G</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 440" role="img" aria-label="GameChanger monogram">
+  <defs>
+    <style type="text/css">
+      .m {
+        font-family: Newsreader, Georgia, "Times New Roman", serif;
+        font-weight: 500;
+      }
+    </style>
+    <mask id="gf" maskUnits="userSpaceOnUse" x="0" y="0" width="450" height="440">
+      <rect width="450" height="440" fill="#fff"/>
+      <text class="m" x="180" y="270" text-anchor="middle" font-size="300" fill="#000" stroke="#000" stroke-width="16" stroke-linejoin="round">G</text>
+    </mask>
+  </defs>
+  <text class="m" x="290" y="380" text-anchor="middle" font-size="300" fill="#F4F0E7" mask="url(#gf)">C</text>
+  <text class="m" x="180" y="270" text-anchor="middle" font-size="300" fill="#F4F0E7">G</text>
 </svg>
