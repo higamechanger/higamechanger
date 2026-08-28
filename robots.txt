@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://higamechanger.com/sitemap.xml
