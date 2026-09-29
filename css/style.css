@@ -351,9 +351,14 @@ a {
 }
 
 .nav-brand-wordmark {
-  height: 16px;
+  height: 24px;
   width: auto;
   display: block;
+  transition: height 0.35s var(--ease);
+}
+
+.site-nav.is-scrolled .nav-brand-wordmark {
+  height: 20px;
 }
 
 .site-nav--static {
